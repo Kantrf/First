@@ -58,11 +58,12 @@ function sort(folder, cb){
              else {
                 createDir(confPath.end, () => {
                     const innerPath = path.resolve(confPath.end, path.basename(currPath)[0])
-                    createDir(innerPath, () => {
-                        fs.copyFile(currPath, path.resolve(innerPath, path.basename(currPath)), (err) => {
-                            if (err) throw err 
-                        })              
-                    })           
+                    console.log(path.basename(currPath))
+                   // createDir(innerPath, () => {
+                     //   fs.copyFile(currPath, path.resolve(innerPath, path.basename(currPath)), (err) => {
+                      //     if (err) throw err 
+                    //    })              
+                  //  })           
 
                 })
              }
