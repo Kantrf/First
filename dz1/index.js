@@ -30,7 +30,6 @@ const confPath = {
 } 
 
 function createDir(folder, cb) {
-    // if (!fs.existsSync(folder)) {
      fs.stat(folder, (err)=>{
          if (!err) {
              cb()
@@ -58,12 +57,11 @@ function sort(folder, cb){
              else {
                 createDir(confPath.end, () => {
                     const innerPath = path.resolve(confPath.end, path.basename(currPath)[0])
-                    console.log(path.basename(currPath))
-                   // createDir(innerPath, () => {
-                     //   fs.copyFile(currPath, path.resolve(innerPath, path.basename(currPath)), (err) => {
-                      //     if (err) throw err 
-                    //    })              
-                  //  })           
+                    createDir(innerPath.toUpperCase(), () => {
+                        fs.copyFile(currPath, path.resolve(innerPath, path.basename(currPath)), (err) => {
+                           if (err) throw err 
+                        })              
+                    })           
 
                 })
              }

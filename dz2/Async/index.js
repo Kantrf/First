@@ -40,10 +40,8 @@ const confPath = {
 async function createDir(folder) {
     try {
           await stat(folder)
-          return
         } catch (err) {
           await  mkdir(folder)
-          return
         }   
  }
 
@@ -58,23 +56,22 @@ async function sort(folder) {
             await sort(currPath)
          else 
             await createDir(confPath.end)
-            const innerPath = path.resolve(confPath.end, path.basename(currPath)[0])
-            await createDir(innerPath)
-            if (!stats.isDirectory()) 
+            const innerPath = path.resolve(confPath.end, path.basename(currPath)[0].toUpperCase())
+            await createDir(innerPath.toUpperCase())
+            if (!stats.isDirectory()) {
             await copyFile(currPath, path.resolve(innerPath, path.basename(currPath)))
-      } 
-     return
-    }  catch (err) {console.log("Failed")}          
+            }
+      }  
+    }  catch (err) {throw err}          
  
 }
 
-//sort(confPath.beg)
 
  let fold = confPath.beg
  let del  = async function (fold) {
     await sort(confPath.beg)
     if (confPath.Del==true) {
-    // let stats = await stat(fold)
+
      let files = await readdir(fold)
 
     for (const file of files) {
@@ -89,6 +86,6 @@ async function sort(folder) {
      await rm(fold, {recursive:true})
     }
  }
-    del(fold)
+ del(fold)
 
 

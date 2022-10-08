@@ -1,29 +1,12 @@
 const express = require("express")
-const yargs = require("yargs")
+
 const app = express()
 
-const args = yargs
-.usage('Usage: node $0 [option]')
-.version('0.0.1')
-.help('help')
-.alias('help','h')
-.alias('version','v')
-.option('Delay', {
-       describe: 'Интервал времени вывода даты, в секундах',
-       default: '1'      
-})
-.alias('Delay','d')
-.option('Limit', {
-       describe: 'Общий промежуток времени вывода даты, в секундах',
-       default: '10'      
-})
-.alias('Limit','l')
-.argv
-
 let connections = []
-const delay = args.Delay*1000
-const limit = args.Limit
+const delay = process.argv[2] || 1000
+const limit = process.argv[3] || 10
 
+console.log(limit)
 app.get("/", (req,res,next) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8")
     res.setHeader("Transfer-Encoding", "chunked")
@@ -37,7 +20,7 @@ setTimeout(function clock() {
         
         date = curdate.getDate()
         year = curdate.getFullYear() 
-       month = curdate.getMonth() 
+        month = curdate.getMonth() 
         hours = curdate.getHours() 
         minutes = curdate.getMinutes()  
         seconds = curdate.getSeconds()
