@@ -3,10 +3,9 @@ const express = require("express")
 const app = express()
 
 let connections = []
-const delay = process.argv[2] || 1000
-const limit = process.argv[3] || 10
+const delay = process.env.delay || 1000
+const limit = process.env.limit || 10
 
-console.log(limit)
 app.get("/", (req,res,next) => {
     res.setHeader("Content-Type", "text/html; charset=utf-8")
     res.setHeader("Transfer-Encoding", "chunked")
@@ -14,7 +13,6 @@ app.get("/", (req,res,next) => {
 })
 
 let tick = 0
-
 setTimeout(function clock() {
     let curdate = new Date()
         
@@ -26,7 +24,7 @@ setTimeout(function clock() {
         seconds = curdate.getSeconds()
 
         console.log('Time:' + hours + ':' + minutes + ':' + seconds);
-
+       
     if(++tick > limit) { 
        connections.map(res => {
         res.write(` END - Текущая дата: ${year} . ${month} . ${date}  Текущее время: ${hours} : ${minutes} : ${seconds}.\n`)
@@ -45,5 +43,7 @@ setTimeout(function clock() {
 
 app.listen(3000, () => {
     console.log("server running")
+    console.log(delay)
+console.log(limit)
 })
 
